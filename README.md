@@ -53,7 +53,7 @@ The design pattern considered the separation between different layers,
  
  below are the set of REST Services and the associated URI.
  
- ![alt ItemEndpoints](ItemEndpoints.png)   
+ ![alt ItemEndpoints](ItemEndpoints.PNG)   
 
 ## 3- Setting and Running Application
 ### The tools required are: 
@@ -76,10 +76,10 @@ as in the rest api listed above:
 
 ###here is an example of GET Item result:
 
-![alt getItem](ItemsGet.png)
+![alt getItem](ItemsGet.PNG)
 
 ### Example of Item Post :
 
-![alt postItem](ItemsPost.png)
+![alt postItem](ItemsPost.PNG)
 
 
