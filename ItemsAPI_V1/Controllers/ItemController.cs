@@ -21,7 +21,7 @@ namespace ItemsAPI_V1.Controllers
         public ItemController()
         {
             _ItemService = new ItemService("", "ItemsDB");
-            //InsertTestItems();
+            InsertTestItems();
 
         }
 
