@@ -53,7 +53,7 @@ The design pattern considered the separation between different layers,
  
  below are the set of REST Services and the associated URI.
  
-![alt ItemsEndpoints](ItemsEndpoints.png)   
+ ![alt ItemsEndpoints](ItemsEndpoints.png)   
 
 ## 3- Setting and Running Application
 ### The tools required are: 
