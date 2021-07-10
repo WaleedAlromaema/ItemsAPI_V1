@@ -16,7 +16,7 @@ Author : Waleed Alromaema
 3- Runing Application
 
 ----------------
-## 1- About Movie Catalogue.
+## 1- About Items API.
 
 Item API is Microservice REST API Application developed by .NET Core API . It provide the following Services:
 
@@ -57,7 +57,9 @@ The design pattern considered the separation between different layers,
 
 ## 3- Setting and Running Application
 #### - Database Configuration
--  The Class MongoDBConfiguration is used for Automatic binding the appsetting of database related information :   
+-  The Class MongoDBConfiguration is used for Automatic binding the MongoDB Connection Parameters from either 
+    Docker Environment variable if not exist it get information from database related information stored in appsetting
+- in this way we guranteed that we get info from first priority is Docker Environmental Variables then if not exist from the appsetting:   
 
 ```
    public class MongoDBConfiguration
