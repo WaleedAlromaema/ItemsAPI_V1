@@ -92,6 +92,7 @@ The design pattern considered the separation between different layers,
             }
         }
     }
+    
 '''
 
    or Docker Database information stored in an Environmental variable stored with in the Docker-Composs.yml file:
