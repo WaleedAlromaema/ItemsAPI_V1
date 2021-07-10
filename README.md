@@ -16,7 +16,7 @@ Author : Waleed Alromaema
 3- Runing Application
 
 ----------------
-## 1- About Movie Catalogue.
+## 1- About Items API.
 
 Item API is Microservice REST API Application developed by .NET Core API . It provide the following Services:
 
@@ -56,6 +56,82 @@ The design pattern considered the separation between different layers,
  ![alt ItemEndpoints](ItemEndpoints.PNG)   
 
 ## 3- Setting and Running Application
+#### - Database Configuration
+-  The Class MongoDBConfiguration is used for Automatic binding the MongoDB Connection Parameters from either 
+    Docker Environment variable if not exist it get information from database related information stored in appsetting
+- in this way we guranteed that we get info from first priority is Docker Environmental Variables then if not exist from the appsetting:   
+
+```
+   public class MongoDBConfiguration
+    {
+        public string Database { get; set; }
+        public string Host { get; set; }
+        public int Port { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                string UserEnvVar = Environment.GetEnvironmentVariable("MONGO_INITDB_ROOT_USERNAME");
+                string PasswordEnvVar = Environment.GetEnvironmentVariable("MONGO_INITDB_ROOT_PASSWORD");
+                if (string.IsNullOrEmpty(UserEnvVar) || string.IsNullOrEmpty(PasswordEnvVar))
+                {
+
+                    if (string.IsNullOrEmpty(User) || string.IsNullOrEmpty(Password))
+                    {
+                        return $@"mongodb://{Host}:{Port}";
+                    }
+                    else 
+                        return $@"mongodb://{User}:{Password}@{Host}:{Port}";
+                }
+                else
+                {
+                    return $@"mongodb://{UserEnvVar}:{PasswordEnvVar}@{Host}:{Port}";
+                }
+                    
+                
+            }
+        }
+    }
+```
+   
+   or Docker Database information stored in an Environmental variable stored with in the Docker-Composs.yml file:
+   
+```
+    itemsapi_v1:
+    image: ${DOCKER_REGISTRY-}itemsapiv1
+    build:
+      context: .
+      dockerfile: ItemsAPI_V1\Dockerfile
+    ports:
+      - 5000:80
+    environment:
+      MongoDB__Host: mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    depends_on:
+      - mongo 
+```
+
+- In Startup file we bind the configuration from appsetting to the instance of ServerConfiguration class object that used to map appsetting MongoDB Json entray 
+- ServerConfiguration class consist of :
+
+```
+ public class ServerConfiguration
+    {
+        public MongoDBConfiguration MongoDB { get; set; } = new MongoDBConfiguration();
+    }
+```
+
+  with ServerConfiguration class using :
+
+```
+            ServerConfiguration configuration = new ServerConfiguration();
+            Configuration.Bind(configuration);
+```
+
+	    
 ### The tools required are: 
 -  visual Studio 2019
 -  use nuget to get Mongo db drivers
@@ -65,7 +141,7 @@ The design pattern considered the separation between different layers,
 #### - Git Link
 
 ```
- https://github.com/WaleedAlromaema/ItemsAPI_V1.git
+https://github.com/WaleedAlromaema/ItemsAPI_V1.git
 ```
 
 #### - POSTMAN
