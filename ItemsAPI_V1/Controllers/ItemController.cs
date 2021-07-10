@@ -18,12 +18,13 @@ namespace ItemsAPI_V1.Controllers
 
         //public List<Item> Items { get; set; }
         public IItemService _ItemService { get; set; }
-        public ItemController()
+        public ItemController(IItemService iItemService)
         {
-            _ItemService = new ItemService("", "ItemsDB");
-            //InsertTestItems();
+            _ItemService = iItemService;
+             InsertTestItems();
 
         }
+        
 
         public void InsertTestItems()
         {
@@ -60,12 +61,15 @@ namespace ItemsAPI_V1.Controllers
         public IActionResult Post([FromForm] string currentURL)
         {
             string type = ParseURLAndGetTypeVale(currentURL);
+            if (type == null)
+            {
+                return NotFound();
+            }
             Item item = _ItemService.GetItemByType("Items", type);
-            return new ObjectResult(item);
-
+            
             if (item == null)
             {
-                return BadRequest();
+                return NotFound();
             }
             else
             {
@@ -73,67 +77,15 @@ namespace ItemsAPI_V1.Controllers
 
             }
         }
-        //[HttpPost]
-        //public IActionResult Post([FromBody] Item item)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    _ItemService.InsertItem("Items", item);
-
-        //    return CreatedAtAction("Get", new { id = item.Id }, item);
-
-        //}
-
-        //[HttpPost("{currentURL}")]
-        // [HttpPost]
-        //public IActionResult Post([FromBody] string currentURL)
-        //{
-        //    Debug.WriteLine("--------------------------------------------------------------------------------------"+currentURL);
-        //    Console.WriteLine("--------------------------------------------------------------------------------------" + currentURL);
-
-        //    return Created(currentURL,new Item());
-        //    //return Ok(new ObjectResult(new Item()));
-
-        //    //Debug.WriteLine("--------------------------------------------------------------------------------------"+currentURL);
-        //    //string type = ParseURLAndGetTypeVale(currentURL);
-        //    //Item item = _ItemService.GetItemByType("Items", type);
-        //    //if (item == null)
-        //    //{
-        //    //    return NotFound();
-        //    //}
-        //    //else
-        //    //{
-        //    //    return new ObjectResult(item);
-        //    //}
-        //    //Created()
-        //    //Item item = _ItemService.GetItemByType("Items", type);
-        //    //if (item == null)
-        //    //{
-        //    //    return BadRequest();
-        //    //}
-        //    //else
-        //    //{
-        //    //    return CreatedAtAction(
-        //    //        "",
-        //    //        new
-        //    //        {
-        //    //            HasToChange = item.HasToChange
-        //    //        },
-        //    //        item);
-        //    //    //return new ObjectResult(item);
-        //    //}
-        //}
-
+        
         private string ParseURLAndGetTypeVale(string URL)
         {
-            string typeValue = "";
+            string typeValue = null;
 
             const string pattern = @"\b&type=\S*\b";
 
             MatchCollection myMatches = Regex.Matches(URL, pattern, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+            
             foreach (Match nextMatch in myMatches)
             {
                 string result = nextMatch.ToString();

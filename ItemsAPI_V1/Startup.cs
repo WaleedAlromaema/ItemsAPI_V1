@@ -25,6 +25,13 @@ namespace ItemsAPI_V1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ServerConfiguration configuration = new ServerConfiguration();
+            Configuration.Bind(configuration);
+            IMongoCRUD crud = new MongoCRUD(configuration.MongoDB); 
+            IItemService service = new ItemService(crud); 
+
+            services.AddSingleton<IItemService>(service);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

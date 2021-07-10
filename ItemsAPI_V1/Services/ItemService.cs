@@ -8,7 +8,12 @@ namespace ItemsAPI_V1
 {
     public class ItemService : IItemService
     {
-        public MongoCRUD CRUD { get; set; }
+        public IMongoCRUD CRUD { get; set; }
+        public ItemService(IMongoCRUD crud)
+        {
+            CRUD = crud;
+
+        }
         public ItemService(string stringConnection, string databaseName)
         {
             CRUD = new MongoCRUD(stringConnection, databaseName);

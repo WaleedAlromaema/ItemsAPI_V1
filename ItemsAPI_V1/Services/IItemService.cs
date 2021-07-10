@@ -5,7 +5,7 @@ namespace ItemsAPI_V1
 {
     public interface IItemService
     {
-        MongoCRUD CRUD { get; set; }
+        IMongoCRUD CRUD { get; set; }
 
         void DeleteItem(string collectionName, Item item);
         void DeleteItemById(string collectionName, Guid id);

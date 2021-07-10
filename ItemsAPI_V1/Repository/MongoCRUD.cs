@@ -8,16 +8,25 @@ using System.Threading.Tasks;
 
 namespace ItemsAPI_V1
 {
-    public class MongoCRUD
+    public class MongoCRUD : IMongoCRUD
     {
         public string DatabaseName { get; set; }
         public IMongoClient Client { get; set; }
         public IMongoDatabase Database { get; set; }
-
-        public MongoCRUD(string connectionstring,string DatabaseName)
+        //MongoDBConfiguration config
+        public MongoCRUD(MongoDBConfiguration config)
         {
-            DatabaseName = DatabaseName;
-            Client = new MongoClient();
+            this.DatabaseName = DatabaseName;
+            Client = new MongoClient(config.ConnectionString);
+            Database = Client.GetDatabase(config.Database);
+        }
+        public MongoCRUD(string connectionstring, string DatabaseName)
+        {
+            this.DatabaseName = DatabaseName;
+            //Environment.SetEnvironmentVariable("ConnectionString", "mongodb://root:root@db:27017/?authSource=admin&readPreference=primary&appname=test&ssl=false");
+
+            Client = new MongoClient(connectionstring);
+            //Client = new MongoClient(Environment.GetEnvironmentVariable("mongodb://root:root@db:27017/?authSource=admin&readPreference=primary&appname=test&ssl=false"));
             Database = Client.GetDatabase(DatabaseName);
         }
 
@@ -37,7 +46,7 @@ namespace ItemsAPI_V1
             Database.CreateCollection(collectionName);
 
         }
-        
+
         public void DeleteCollection<T>(string collectionName)
         {
             Database.DropCollection(collectionName);
@@ -78,13 +87,10 @@ namespace ItemsAPI_V1
 
             return collection.Find(filter).First();
         }
-        public T GetDocumentByFilter<T>(string table,FilterDefinition<T> filter)
+        public T GetDocumentByFilter<T>(string table, FilterDefinition<T> filter)
         {
-           
             var collection = this.Database.GetCollection<T>(table);
-
-            return collection.Find(filter).First();
-           
+             return collection.Find(filter).FirstOrDefault();
         }
         public List<T> GetDocumentsByFilter<T>(string table, FilterDefinition<T> filter)
         {
@@ -112,7 +118,7 @@ namespace ItemsAPI_V1
         public void DeleteDocumentByFilter<T>(string table, FilterDefinition<T> filter)
         {
             var collection = this.Database.GetCollection<T>(table);
-            
+
             collection.DeleteOne(filter);
         }
         //public void DeleteDocumentsByFilter<T>(string table, FilterDefinition<T> filter)

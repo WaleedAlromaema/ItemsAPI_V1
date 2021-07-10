@@ -1,0 +1,87 @@
+version: '3.4'
+
+services:
+  mongo:
+     image: mongo
+     restart: always
+     environment:
+       MONGO_INITDB_ROOT_USERNAME: root
+       MONGO_INITDB_ROOT_PASSWORD: root
+     ports:
+      - 27017:27017
+  #mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #    - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  #   depends_on:
+  #     - mongo
+  itemsapi_v1:
+    image: ${DOCKER_REGISTRY-}itemsapiv1
+    build:
+      context: .
+      dockerfile: ItemsAPI_V1\Dockerfile
+    ports:
+      - 5000:80
+    environment:
+      MongoDB__Host: mongo
+      MONGO_INITDB_ROOT_USERNAME: 
+      MONGO_INITDB_ROOT_PASSWORD: 
+    depends_on:
+      - mongo 
+  
+#    container_name: ItemsAPIContainer
+#    depends_on:
+#      - db
+#    networks:
+#      - mongodb_backend_network
+#  db:
+#    image: mongo:latest
+#    environment:
+#      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongodb_password
+#      MONGO_INITDB_ROOT_USERNAME: root
+    
+#    volumes:
+#     - mongo_data:/data/db
+#    networks:
+#     - mongodb_backend_network
+#    secrets:
+#     - mongodb_password
+#    logging:
+#      driver: json-file
+#    deploy:
+#      placement:
+#        constraints:
+#         - node.role == manager
+#      resources:
+#        reservations:
+#          memory: 128M
+#        limits:
+#          memory: 2048M
+#networks:
+#  mongodb_backend_network:
+#    driver: overlay
+#volumes:
+#  mongo_data:
+#    driver: local
+#secrets:
+#  mongodb_password:
+#    external: true 
+#  mongo:
+#    image: mongo:latest
+#    container_name: MongoDB_Container
+#    ports:
+#      - "27017:27017"
+#    environment:
+#      MONGO_INITDB_ROOT_PASSWORD: root
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGP_CONNECTION_STRING : "mongodb://root:root@mongo:27017/?authSource=admin&readPreference=primary&appname=test&ssl=false"
+#    networks:
+#      - mongodb_backend_network
+  
+#networks:
+#   mongodb_backend_network:
+#     driver: overlay
