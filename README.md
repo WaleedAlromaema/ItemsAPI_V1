@@ -58,6 +58,7 @@ The design pattern considered the separation between different layers,
 ## 3- Setting and Running Application
 #### - Database Configuration
 -  The Class MongoDBConfiguration is used for Automatic binding the appsetting of database related information :   
+
 '''
    public class MongoDBConfiguration
     {
@@ -92,7 +93,9 @@ The design pattern considered the separation between different layers,
         }
     }
 '''
+
    or Docker Database information stored in an Environmental variable stored with in the Docker-Composs.yml file:
+   
 '''
     itemsapi_v1:
     image: ${DOCKER_REGISTRY-}itemsapiv1
@@ -108,19 +111,24 @@ The design pattern considered the separation between different layers,
     depends_on:
       - mongo 
 '''
+
 - In Startup file we bind the configuration from appsetting to the instance of ServerConfiguration class object that used to map appsetting MongoDB Json entray 
 - ServerConfiguration class consist of :
+
 '''
  public class ServerConfiguration
     {
         public MongoDBConfiguration MongoDB { get; set; } = new MongoDBConfiguration();
     }
 '''
+
   with ServerConfiguration class using :
+
 '''
             ServerConfiguration configuration = new ServerConfiguration();
             Configuration.Bind(configuration);
-'''	    
+'''
+
 	    
 ### The tools required are: 
 -  visual Studio 2019
