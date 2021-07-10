@@ -59,7 +59,7 @@ The design pattern considered the separation between different layers,
 #### - Database Configuration
 -  The Class MongoDBConfiguration is used for Automatic binding the appsetting of database related information :   
 
-'''
+'''ruby
    public class MongoDBConfiguration
     {
         public string Database { get; set; }
