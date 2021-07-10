@@ -59,7 +59,7 @@ The design pattern considered the separation between different layers,
 #### - Database Configuration
 -  The Class MongoDBConfiguration is used for Automatic binding the MongoDB Connection Parameters from either 
     Docker Environment variable if not exist it get information from database related information stored in appsetting
-- in this way we guranteed that we get info from first priority is Docker Environmental Variables then if not exist from the appsetting:   
+- in this way we guranteed that we get info from first priority is Docker Environmental Variables then if not exist from the appsetting :   
 
 ```
    public class MongoDBConfiguration
