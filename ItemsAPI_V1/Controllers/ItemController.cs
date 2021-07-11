@@ -16,7 +16,7 @@ namespace ItemsAPI_V1.Controllers
     public class ItemController : ControllerBase
     {
 
-        //public List<Item> Items { get; set; }
+        private string CollectionName { get; set; } = "Items";
         public IItemService _ItemService { get; set; }
         public ItemController(IItemService iItemService)
         {
@@ -34,20 +34,20 @@ namespace ItemsAPI_V1.Controllers
                 item.Type = "Iphone" + i;
                 item.HasToChange = ((i % 2) == 0) ? true : false;
                 item.NewURL = (item.HasToChange) ? item.Type + i : "";
-                _ItemService.InsertItem("Items", item);
+                _ItemService.InsertItem(CollectionName, item);
             }
         }
 
         [HttpGet]
         public IEnumerable<Item> Get()
         {
-            return _ItemService.GetAllItems("Items").ToArray();
+            return _ItemService.GetAllItems(CollectionName).ToArray();
         }
         [HttpGet("{type}")]
         public IActionResult GetTByype(string type)
         {
            
-            Item item = _ItemService.GetItemByType("Items", type);
+            Item item = _ItemService.GetItemByType(CollectionName, type);
             if (item == null)
             {
                 return NotFound();
@@ -65,7 +65,7 @@ namespace ItemsAPI_V1.Controllers
             {
                 return NotFound();
             }
-            Item item = _ItemService.GetItemByType("Items", type);
+            Item item = _ItemService.GetItemByType(CollectionName, type);
             
             if (item == null)
             {

@@ -16,7 +16,7 @@ namespace ItemsAPI_V1
         //MongoDBConfiguration config
         public MongoCRUD(MongoDBConfiguration config)
         {
-            this.DatabaseName = DatabaseName;
+            this.DatabaseName = config.Database;
             Client = new MongoClient(config.ConnectionString);
             Database = Client.GetDatabase(config.Database);
         }

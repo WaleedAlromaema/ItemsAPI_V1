@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Windows</DockerTargetOS>
-    <ProjectGuid>dde20ff2-26a8-4cdf-a4d4-81a10f90b19c</ProjectGuid>
+    <ProjectGuid>17ca8188-a876-4f1a-b421-f8cbe6bbb6c4</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://{ServiceIPAddress}{ServicePort}/api/Item</DockerServiceUrl>
     <DockerServiceName>itemsapi_v1</DockerServiceName>
