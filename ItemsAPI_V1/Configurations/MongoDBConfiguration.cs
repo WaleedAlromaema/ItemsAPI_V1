@@ -43,7 +43,7 @@ namespace ItemsAPI_V1
                 string UserEnvVar = Environment.GetEnvironmentVariable("MONGO_INITDB_ROOT_USERNAME");
                 string PasswordEnvVar = Environment.GetEnvironmentVariable("MONGO_INITDB_ROOT_PASSWORD");
                 string MongoEnvHost= Environment.GetEnvironmentVariable("MongoDB__Host");
-                string MongoEnvPort = Environment.GetEnvironmentVariable("MONGO_PORT");
+                string MongoEnvPort = Environment.GetEnvironmentVariable("MONGODB_PORT");
                 
                 if (string.IsNullOrEmpty(UserEnvVar) || string.IsNullOrEmpty(PasswordEnvVar))
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ItemsAPI_V1
 {
@@ -18,5 +19,6 @@ namespace ItemsAPI_V1
         void InsertItem(string collectionName, Item item);
         void UpdateItem(string collectionName, Guid id, Item item);
         void UpdateItem(string collectionName, Item item);
+        void InsertManyItems(string collectionName, Collection<Item> items);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -65,7 +66,10 @@ namespace ItemsAPI_V1
         {
             CRUD.InsertOneDocument<Item>(collectionName, item);
         }
-
+        public void InsertManyItems(string collectionName, Collection<Item> items)
+        {
+            CRUD.InsertManyDocuments<Item>(collectionName, items);
+        }
         public void DeleteItemById(string collectionName, Guid id)
         {
             CRUD.DeleteDocumentById<Item>(collectionName, id);
