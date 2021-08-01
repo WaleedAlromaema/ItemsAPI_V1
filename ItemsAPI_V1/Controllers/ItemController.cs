@@ -136,19 +136,38 @@ namespace ItemsAPI_V1.Controllers
         {
             string typeValue = null;
 
-            const string pattern = @"\b&type=\S*\b&*";
+            //const string pattern = @"\b&type=\S*\b";
+            const string pattern = @"\b&type=([^&]*)\b";
             //const string pattern = @"^&type=(.*)";
 
             MatchCollection myMatches = Regex.Matches(URL, pattern, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
             
             foreach (Match nextMatch in myMatches)
             {
-                string result = nextMatch.ToString();
-                typeValue = result.Substring(6);
+                string result = nextMatch.Groups[1].Value.ToString();
+               
             }
 
             return typeValue;
         }
+        //private string ParseURLAndGetTypeVale(string URL)
+        //{
+        //    string typeValue = null;
+
+        //    const string pattern = @"\b&type=\S*\b";
+        //    //const string pattern = @"\b&type=[^&]*\b";
+        //    //const string pattern = @"^&type=(.*)";
+
+        //    MatchCollection myMatches = Regex.Matches(URL, pattern, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+
+        //    foreach (Match nextMatch in myMatches)
+        //    {
+        //        string result = nextMatch.ToString();
+        //        typeValue = result.Substring(6);
+        //    }
+
+        //    return typeValue;
+        //}
 
     }
 }
